@@ -1,5 +1,4 @@
 # react-input-position
----
 react-input-position is a component that decorates it's children with mouse/touch position tracking, a status toggle fired by click/gesture events, and more. Assisting in the creation of UI features that require detailed information about user touch/mouse input.
 
 The status toggle feature can be triggered by Click, Double Click, Hover, Mouse Down, Tap, Double Tap, Touch, and Long Touch gestures.
@@ -7,17 +6,14 @@ The status toggle feature can be triggered by Click, Double Click, Hover, Mouse 
 Includes an item tracking feature which provides coordinates that can be moved by user input. This position can be limited through min/max settings or even limited based on the size of a linked element anywhere in the hierarchy of children. Useful for creating some image components such as magnifiers.
 
 ## Demo
----
 Visit the [react-input-position demo site](https://myniztan.github.io/react-input-position).
 
 ## Installation
----
 ```sh
 npm install --save react-input-position
 ```
 
 ## Basic Usage
----
 ```JSX
 import ReactInputPosition from "react-input-position";
 ...
@@ -99,7 +95,6 @@ Child components will receive the following props (although some may be inactive
 **onLoadRefresh:** If slow loading elements are causing your initial stats to be inaccurate, you can call this function after they are loaded to reset and recalculate. For example, in an image's onload event.
 
 ## Props API
----
 All props are optional.
 
 **mouseActivationMethod:** Sets the mouse action necessary to toggle the component's active state. Type: string, Default: click.
@@ -155,7 +150,6 @@ All props are optional.
 **cursorStyleActive:** Sets the cursor style while the component is active. Accepts standard CSS cursor values. Type: string, Default: Uses cursorStyle if not set.
 
 ## Item Position Feature
----
 To use this feature, set the component's trackItemPosition prop to true. If you intend to use the itemPositionLimitBySize feature, pass the itemRef prop to the element you wish to enable the feature on. Example: `<img ref={props.itemRef} src="./example.jpg" />`.
 
 Set the item element's position to absolute and use the itemPosition prop to position the element. Set the item position limits to control how far the item can be moved.
@@ -165,13 +159,11 @@ The item element will now move based on the input of the user while the componen
 You can adjust the behavior of this feature further using the many API props provided.
 
 ## Style Notes
----
 Some styling passed to the component may be overwritten if they conflict with styles required for correct behavior.
 
 By default, the width of the component will adjust to the size of the child components. You can change this behavior by passing in your own styling using the className and/or style props.
 
 ## Example Project
----
 ```sh
 git clone https://github.com/myniztan/react-input-position.git
 cd react-input-position
