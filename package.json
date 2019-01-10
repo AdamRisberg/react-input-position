@@ -1,6 +1,6 @@
 {
   "name": "react-input-position",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React component that decorates it's children with mouse/touch position tracking, a status toggle fired by click/gesture events, and more.",
   "keywords": [
     "touch",
