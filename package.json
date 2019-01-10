@@ -17,6 +17,12 @@
     "event",
     "listener"
   ],
+  "license": "MIT",
+  "author": "Adam Risberg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myniztan/react-input-position.git"
+  },
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -26,8 +32,6 @@
     "deploy": "gh-pages -d examples/dist",
     "publish-demo": "npm run build && npm run deploy"
   },
-  "author": "Adam Risberg",
-  "license": "MIT",
   "peerDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
