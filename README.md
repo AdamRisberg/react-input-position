@@ -170,4 +170,11 @@ Some styling passed to the component may be overwritten if they conflict with st
 
 By default, the width of the component will adjust to the size of the child components. You can change this behavior by passing in your own styling using the className and/or style props.
 
-When using the item position feature, set the item element's CSS position to absolute.
+## Example Project
+---
+```sh
+git clone https://github.com/myniztan/react-input-position.git
+cd react-input-position
+npm install
+npm start
+```
