@@ -67,6 +67,7 @@ class ReactInputPosition extends Component {
     centerItemOnActivate: PropTypes.bool,
     centerItemOnActivatePos: PropTypes.bool,
     centerItemOnLoad: PropTypes.bool,
+    alignItemOnActivePos: PropTypes.bool,
     itemMovementMultiplier: PropTypes.number,
     cursorStyle: PropTypes.string,
     cursorStyleActive: PropTypes.string
@@ -98,12 +99,12 @@ class ReactInputPosition extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.mouseActivationMethod !== this.props.mouseActivationMethod) {
+    if (prevProps.mouseActivationMethod !== this.props.mouseActivationMethod) {
       this.removeMouseEventListeners();
       this.setMouseInteractionMethods();
       this.addMouseEventListeners();
     }
-    if(prevProps.touchActivationMethod !== this.props.touchActivationMethod) {
+    if (prevProps.touchActivationMethod !== this.props.touchActivationMethod) {
       this.removeTouchEventListeners();
       this.setTouchInteractionMethods();
       this.addTouchEventListeners();
@@ -138,10 +139,11 @@ class ReactInputPosition extends Component {
   }
 
   setMouseInteractionMethods() {
-    const mouseInteractionMethods = mouseActivation[this.props.mouseActivationMethod];
+    const mouseInteractionMethods =
+      mouseActivation[this.props.mouseActivationMethod];
     this.mouseHandlers = [];
 
-    for(let key in mouseInteractionMethods) {
+    for (let key in mouseInteractionMethods) {
       this.mouseHandlers.push({
         event: key.toLowerCase(),
         handler: mouseInteractionMethods[key].bind(this)
@@ -150,10 +152,11 @@ class ReactInputPosition extends Component {
   }
 
   setTouchInteractionMethods() {
-    const touchInteractionMethods = touchActivation[this.props.touchActivationMethod];
+    const touchInteractionMethods =
+      touchActivation[this.props.touchActivationMethod];
     this.touchHandlers = [];
 
-    for(let key in touchInteractionMethods) {
+    for (let key in touchInteractionMethods) {
       this.touchHandlers.push({
         event: key.toLowerCase(),
         handler: touchInteractionMethods[key].bind(this)
@@ -183,7 +186,8 @@ class ReactInputPosition extends Component {
       centerItemOnActivate,
       centerItemOnActivatePos,
       linkItemToActive,
-      itemMovementMultiplier
+      itemMovementMultiplier,
+      alignItemOnActivePos
     } = this.props;
 
     const stateUpdate = {
@@ -240,20 +244,44 @@ class ReactInputPosition extends Component {
       shouldLimitItem = true;
     } else if (trackItemPosition && activate && centerItemOnActivatePos) {
       stateUpdate.itemPosition = {
-        x: convertRange(
+        x:
+          utils.convertRange(
+            0,
+            width,
+            0,
+            -(stateUpdate.itemDimensions.width || 0) + width,
+            stateUpdate.activePosition.x
+          ) +
+          (width / 2 - stateUpdate.activePosition.x),
+        y:
+          utils.convertRange(
+            0,
+            height,
+            0,
+            -(stateUpdate.itemDimensions.height || 0) + height,
+            stateUpdate.activePosition.y
+          ) +
+          (height / 2 - stateUpdate.activePosition.y)
+      };
+      shouldLimitItem = true;
+    }
+
+    if (trackItemPosition && alignItemOnActivePos) {
+      stateUpdate.itemPosition = {
+        x: utils.convertRange(
           0,
-          width,
+          Math.ceil(width) - 1,
           0,
           -(stateUpdate.itemDimensions.width || 0) + width,
           stateUpdate.activePosition.x
-        ) + ((width / 2) - stateUpdate.activePosition.x),
-        y: convertRange(
+        ),
+        y: utils.convertRange(
           0,
-          height,
+          Math.ceil(height) - 1,
           0,
           -(stateUpdate.itemDimensions.height || 0) + height,
           stateUpdate.activePosition.y
-        ) + ((height / 2) - stateUpdate.activePosition.y)
+        )
       };
       shouldLimitItem = true;
     }
@@ -327,7 +355,6 @@ class ReactInputPosition extends Component {
           itemPositionMaxY = 0;
         }
       } else if (itemWidth || itemHeight) {
-
         itemPositionMaxX = 0;
         itemPositionMaxY = 0;
         itemPositionMinX = -itemWidth + offsetX;
@@ -476,11 +503,6 @@ class ReactInputPosition extends Component {
       </div>
     );
   }
-}
-
-function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
-  const percent = (oldValue - oldMin) / (oldMax - oldMin);
-  return percent * (newMax - newMin) + newMin;
 }
 
 export { MOUSE_ACTIVATION, TOUCH_ACTIVATION };

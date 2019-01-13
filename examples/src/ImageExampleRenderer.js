@@ -3,11 +3,7 @@ import React from "react";
 const image = require("./sample-image.jpg");
 
 const ImageExampleRenderer = props => {
-  const {
-    itemRef,
-    itemPosition,
-    active
-  } = props;
+  const { itemRef, itemPosition, active } = props;
 
   return (
     <React.Fragment>

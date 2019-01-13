@@ -2,21 +2,21 @@ function touchStart() {
   this.touched = true;
   this.justTouched = true;
   this.startTapTimer();
-};
+}
 
 function touchEnd(e) {
-  if(e.cancelable) e.preventDefault();
+  if (e.cancelable) e.preventDefault();
 
   this.touched = false;
   this.justTouched = false;
 
-  if(this.tapTimedOut) {
+  if (this.tapTimedOut) {
     this.tapTimedOut = false;
     return;
   }
   clearTimeout(this.tapTimer);
 
-  if(this.tapped && !this.doubleTapTimedOut) {
+  if (this.tapped && !this.doubleTapTimedOut) {
     clearTimeout(this.doubleTapTimer);
 
     const touch = e.changedTouches[0];
@@ -34,7 +34,7 @@ function touchEnd(e) {
 }
 
 function touchMove(e) {
-  if(!this.state.active) return;
+  if (!this.state.active) return;
   e.preventDefault();
 
   const touch = e.touches[0];

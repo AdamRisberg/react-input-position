@@ -111,7 +111,7 @@ All props are optional.
 
 **clickMoveLimit:** Sets the maximum movement allowed during a mouse click. Helps to differentiate between a drag and click. Type: number, Default: 5.
 
-**minUpdateSpeedInMs:** Throttles the state updates. Setting this to zero can create performance issues in IE. Type: number, Default: 1.
+**minUpdateSpeedInMs:** Throttles the mouse/touch position updates. For example, setting this to 10 will force a 10ms delay between position updates. A minimum of 10ms (since it's asynchronous). This won't actually cause updates every 10ms, it simply adds a delay to the natural rate. Note: Setting this to zero can create performance issues in IE. Raising this number too high will cause animations tied to positions to become choppy. Type: number, Default: 1.
 
 **trackPassivePosition:** Provides mouse position regardless of active/inactive state. Type: boolean, Default: false.
 
@@ -119,11 +119,13 @@ All props are optional.
 
 **trackItemPosition:** Activates the item position functionality. Type: boolean, Default: false.
 
-**centerItemOnActivate:** Centers the item's position whenever the component switches to an active state. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
+**centerItemOnLoad:** Centers the item position on component mount. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
 
-**centerItemOnActivatePos:** Centers the item's position whenever the component switches to an active state based on the mouse/touch position. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false. 
+**centerItemOnActivate:** Centers the item position whenever the component switches to an active state. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
 
-**centerItemOnLoad:** Centers the item's position on component mount. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
+**centerItemOnActivatePos:** Centers the item based on the current mouse/touch position whenever the component switches to an active state. Achieved by scaling the input position based on the sizes of the component and item. Useful for image zoom style components where you want to display a larger version of an image, centered on the spot where the user clicked/tapped. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false. 
+
+**alignItemOnActivePos:** Links and aligns the item position with the active position. Achieved by scaling the active position based on the sizes of the component and item. Useful for creating components like a magnifying glass where a larger version of an image needs to stay aligned with a smaller version based on the current mouse/touch position. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false.
 
 **itemMovementMultiplier:** Multiplier to adjust the item's movement. Can also be used to reverse item movement by using a negative number. Type: number, Default: 1.
 

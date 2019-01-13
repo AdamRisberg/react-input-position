@@ -1,7 +1,7 @@
 import React from "react";
 import { MOUSE_ACTIVATION, TOUCH_ACTIVATION } from "../../src";
 
-const ImageExampleControls = (props) => {
+const ImageExampleControls = props => {
   const {
     handleMouseChange,
     handleTouchChange,
@@ -45,7 +45,8 @@ const notes = {
   [MOUSE_ACTIVATION.DOUBLE_CLICK]: "Double click to zoom in/out.",
   [TOUCH_ACTIVATION.TAP]: "Tap to zoom in/out.",
   [TOUCH_ACTIVATION.DOUBLE_TAP]: "Double tap to zoom in/out.",
-  [TOUCH_ACTIVATION.LONG_TOUCH]: "Touch for 1 second without moving to zoom in/out."
-}
+  [TOUCH_ACTIVATION.LONG_TOUCH]:
+    "Touch for 1 second without moving to zoom in/out."
+};
 
 export default ImageExampleControls;

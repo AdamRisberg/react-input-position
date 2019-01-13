@@ -14,22 +14,22 @@ class ImageExample extends Component {
     cursorStyle: "zoom-in",
     cursorStyleActive: "move",
     centerItemOnActivatePos: true
-  }
+  };
 
-  handleMouseChange = (e) => {
+  handleMouseChange = e => {
     const value = e.target.value;
     this.setState(() => ({ mouseActivation: value }));
   };
 
-  handleTouchChange = (e) => {
+  handleTouchChange = e => {
     const value = e.target.value;
     this.setState(() => ({ touchActivation: value }));
   };
 
-  handleCenterChange = (e) => {
+  handleCenterChange = e => {
     const value = e.target.value;
     this.setState(() => ({ centerItemOnActivatePos: Boolean(value) }));
-  }
+  };
 
   render() {
     const {
@@ -42,32 +42,32 @@ class ImageExample extends Component {
 
     return (
       <React.Fragment>
-      <div className="image-example">
-        <ReactInputPosition
-          mouseActivationMethod={mouseActivation}
-          touchActivationMethod={touchActivation}
-          trackItemPosition
-          itemPositionLimitBySize
-          centerItemOnActivatePos={centerItemOnActivatePos}
-          cursorStyle={cursorStyle}
-          cursorStyleActive={cursorStyleActive}
-          className="input-position"
-        >
-          <ImageExampleRenderer />
-          <div className="image-tip">Drag to move while zoomed in.</div>
-        </ReactInputPosition>
-        <ImageExampleControls
-          handleMouseChange={this.handleMouseChange}
-          handleTouchChange={this.handleTouchChange}
-          handleCenterChange={this.handleCenterChange}
-          mouseMethod={mouseActivation}
-          touchMethod={touchActivation}
-        />
-      </div>
+        <div className="image-example">
+          <ReactInputPosition
+            mouseActivationMethod={mouseActivation}
+            touchActivationMethod={touchActivation}
+            trackItemPosition
+            itemPositionLimitBySize
+            centerItemOnActivatePos={centerItemOnActivatePos}
+            cursorStyle={cursorStyle}
+            cursorStyleActive={cursorStyleActive}
+            className="input-position"
+          >
+            <ImageExampleRenderer />
+            <div className="image-tip">Drag to move while zoomed in.</div>
+          </ReactInputPosition>
+          <ImageExampleControls
+            handleMouseChange={this.handleMouseChange}
+            handleTouchChange={this.handleTouchChange}
+            handleCenterChange={this.handleCenterChange}
+            mouseMethod={mouseActivation}
+            touchMethod={touchActivation}
+          />
+        </div>
         <SampleCode />
       </React.Fragment>
     );
   }
-};
+}
 
 export default ImageExample;

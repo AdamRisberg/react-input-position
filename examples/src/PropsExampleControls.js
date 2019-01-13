@@ -1,7 +1,7 @@
 import React from "react";
 import { MOUSE_ACTIVATION, TOUCH_ACTIVATION } from "../../src";
 
-const PropsExampleControls = (props) => {
+const PropsExampleControls = props => {
   const {
     handleMouseChange,
     handleTouchChange,
@@ -35,14 +35,20 @@ const PropsExampleControls = (props) => {
       <div className="label-flex">
         <label className="label-left">
           Track Previous
-          <select defaultValue={""} onChange={handleChange("trackPreviousPosition")}>
+          <select
+            defaultValue={""}
+            onChange={handleChange("trackPreviousPosition")}
+          >
             <option value={"true"}>True</option>
             <option value={""}>False</option>
           </select>
         </label>
         <label className="label-right">
           Track Passive
-          <select defaultValue={"true"} onChange={handleChange("trackPassivePosition")}>
+          <select
+            defaultValue={"true"}
+            onChange={handleChange("trackPassivePosition")}
+          >
             <option value={"true"}>True</option>
             <option value={""}>False</option>
           </select>
@@ -70,7 +76,8 @@ const notes = {
   [TOUCH_ACTIVATION.TAP]: "Tap to activate.",
   [TOUCH_ACTIVATION.TOUCH]: "Touch to activate.",
   [TOUCH_ACTIVATION.DOUBLE_TAP]: "Double tap to activate.",
-  [TOUCH_ACTIVATION.LONG_TOUCH]: "Touch for 1 second without moving to activate."
+  [TOUCH_ACTIVATION.LONG_TOUCH]:
+    "Touch for 1 second without moving to activate."
 };
 
 export default PropsExampleControls;

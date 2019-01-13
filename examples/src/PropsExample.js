@@ -16,17 +16,17 @@ class PropsExample extends Component {
     trackItemPosition: false
   };
 
-  handleMouseChange = (e) => {
+  handleMouseChange = e => {
     const value = e.target.value;
     this.setState(() => ({ mouseActivation: value }));
   };
 
-  handleTouchChange = (e) => {
+  handleTouchChange = e => {
     const value = e.target.value;
     this.setState(() => ({ touchActivation: value }));
   };
 
-  handleChange = (key) => (e) => {
+  handleChange = key => e => {
     const value = e.target.value;
     this.setState(() => ({ [key]: Boolean(value) }));
   };

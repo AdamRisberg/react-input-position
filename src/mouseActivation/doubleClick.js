@@ -3,7 +3,7 @@ import utils from "../utils";
 function mouseDown() {
   this.mouseDown = true;
   this.mouseJustDown = true;
-};
+}
 
 function mouseUp() {
   this.mouseDown = false;
@@ -19,9 +19,9 @@ function dblClick(e) {
 function mouseMove(e) {
   const position = { x: e.clientX, y: e.clientY };
 
-  if(!this.state.active) {
+  if (!this.state.active) {
     return this.setPassivePosition(position);
-  } 
+  }
 
   this.setPosition(position, this.mouseDown && !this.mouseJustDown);
   this.mouseJustDown = false;

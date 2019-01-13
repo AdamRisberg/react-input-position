@@ -1,10 +1,7 @@
 import React from "react";
 
-const ExampleContainer = (props) => {
-  const {
-    title,
-    children
-  } = props;
+const ExampleContainer = props => {
+  const { title, children } = props;
 
   return (
     <div className="example-container">

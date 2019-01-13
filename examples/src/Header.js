@@ -14,7 +14,7 @@ const Header = () => {
           <a href="https://www.npmjs.com/package/react-input-position">
             <img src={require("./npm-logo.png")} alt="NPM Logo" />
           </a>
-       </div>
+        </div>
       </div>
     </header>
   );

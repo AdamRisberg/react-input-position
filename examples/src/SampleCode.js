@@ -4,11 +4,14 @@ const SampleCode = () => {
   return (
     <div className="padding-20">
       <p className="margin-top-10">
-        The following code shows how to achieve the above example. This is meant to be a quick, simple example. Only one image was used, but this could be used with two (small and large version). The image, while zoomed in, must be bigger than the container.
+        The following code shows how to achieve the above example. This is meant
+        to be a quick, simple example. Only one image was used, but this could
+        be used with two (small and large version). The image, while zoomed in,
+        must be bigger than the container.
       </p>
       <pre className="sample-code">
         <code>
-{`import React from "react";
+          {`import React from "react";
 import ReactInputPosition, {
   MOUSE_ACTIVATION,
   TOUCH_ACTIVATION

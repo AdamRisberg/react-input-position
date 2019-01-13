@@ -22,7 +22,13 @@ function preventDefault(e) {
   e.preventDefault();
 };
 
+function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
+  const percent = (oldValue - oldMin) / (oldMax - oldMin);
+  return percent * (newMax - newMin) + newMin;
+}
+
 export default {
   decorateChildren,
-  preventDefault
+  preventDefault,
+  convertRange
 };

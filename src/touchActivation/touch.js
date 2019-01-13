@@ -5,10 +5,10 @@ function touchStart(e) {
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
   this.activate(position);
-};
+}
 
 function touchEnd(e) {
-  if(e.cancelable) e.preventDefault();
+  if (e.cancelable) e.preventDefault();
 
   this.touched = false;
   this.justTouched = false;
@@ -17,8 +17,8 @@ function touchEnd(e) {
 }
 
 function touchMove(e) {
-  if(!this.state.active) return;
-  if(e.cancelable) e.preventDefault();
+  if (!this.state.active) return;
+  if (e.cancelable) e.preventDefault();
 
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
