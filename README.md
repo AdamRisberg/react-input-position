@@ -33,7 +33,7 @@ import ReactInputPosition, {
 ...
 
 <ReactInputPoisiton
-  mouseActivationMethod={MOUSE_ACTIVATION.DOUBLE_CLICK},
+  mouseActivationMethod={MOUSE_ACTIVATION.DOUBLE_CLICK}
   touchActivationMethod={TOUCH_ACTIVATION.DOUBLE_TAP}
 >
 </ReactInputPosition>
@@ -97,9 +97,9 @@ Child components will receive the following props (although some may be inactive
 ## Props API
 All props are optional.
 
-**mouseActivationMethod:** Sets the mouse action necessary to toggle the component's active state. Type: string, Default: click.
+**mouseActivationMethod:** Sets the mouse action necessary to toggle the component's active state. Accepted Values: "click", "doubleClick", "hover", "mouseDown". Type: string, Default: click.
 
-**touchActivationMethod:** Sets the touch gesture necessary to toggle the component's active state. Type: string, Default: tap.
+**touchActivationMethod:** Sets the touch gesture necessary to toggle the component's active state. Accepted Values: "tap", "doubleTap", "touch", "longTouch". Type: string, Default: tap.
 
 **tapDurationInMs:** Sets the maximum length of touch events in order to be considered tap gestures. Type: number, Default: 180.
 
