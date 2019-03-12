@@ -187,9 +187,16 @@ class ReactInputPosition extends Component {
       centerItemOnActivatePos,
       linkItemToActive,
       itemMovementMultiplier,
-      alignItemOnActivePos
+      alignItemOnActivePos,
+      itemPositionMinX,
+      itemPositionMaxX,
+      itemPositionMinY,
+      itemPositionMaxY,
+      itemPositionLimitBySize,
+      itemPositionLimitInternal
     } = this.props;
 
+    // Set container div info and active position
     const stateUpdate = {
       elementDimensions: { width, height },
       elementOffset: { left, top },
@@ -199,6 +206,10 @@ class ReactInputPosition extends Component {
       }
     };
 
+    // Activate if necessary
+    if (activate) stateUpdate.active = true;
+
+    // Set item dimensions
     if (this.itemRef.current) {
       const itemSize = this.itemRef.current.getBoundingClientRect();
 
@@ -208,6 +219,7 @@ class ReactInputPosition extends Component {
       };
     }
 
+    // Set previous active position
     if (trackPreviousPosition || trackItemPosition) {
       stateUpdate.prevActivePosition = {
         x: this.state.activePosition.x,
@@ -215,6 +227,7 @@ class ReactInputPosition extends Component {
       };
     }
 
+    // Set passive position
     if (trackPassivePosition) {
       stateUpdate.passivePosition = {
         x: position.x - left,
@@ -222,82 +235,69 @@ class ReactInputPosition extends Component {
       };
     }
 
-    let shouldLimitItem = false;
+    // Create adjusted limits
+    const limits = utils.createAdjustedLimits(
+      itemPositionMinX,
+      itemPositionMaxX,
+      itemPositionMinY,
+      itemPositionMaxY,
+      stateUpdate.elementDimensions,
+      stateUpdate.itemDimensions,
+      itemPositionLimitBySize,
+      itemPositionLimitInternal
+    );
 
+    // Center item
+    if (centerItem || (activate && centerItemOnActivate)) {
+      const centerX = (limits.maxX + limits.minX) / 2;
+      const centerY = (limits.maxY + limits.minY) / 2;
+
+      stateUpdate.itemPosition = {
+        x: centerX || 0,
+        y: centerY || 0
+      };
+
+      return this.setState(() => stateUpdate, this.startRefreshTimer);
+    }
+
+    let shouldLimitItem = true;
+
+    // Set item position
     if (trackItemPosition && linkItemToActive) {
       stateUpdate.itemPosition = { ...stateUpdate.activePosition };
-      shouldLimitItem = true;
-    } else if (trackItemPosition && updateItemPosition) {
-      stateUpdate.itemPosition = { ...this.state.itemPosition };
-
-      const moveX =
-        (stateUpdate.activePosition.x - stateUpdate.prevActivePosition.x) *
-        itemMovementMultiplier;
-      const moveY =
-        (stateUpdate.activePosition.y - stateUpdate.prevActivePosition.y) *
-        itemMovementMultiplier;
-
-      stateUpdate.itemPosition.x += moveX;
-      stateUpdate.itemPosition.y += moveY;
-      shouldLimitItem = true;
-    } else if (trackItemPosition && activate && centerItemOnActivate) {
-      shouldLimitItem = true;
+    } else if (trackItemPosition && alignItemOnActivePos) {
+      stateUpdate.itemPosition = utils.alignItemOnPosition(
+        stateUpdate.elementDimensions,
+        stateUpdate.itemDimensions,
+        stateUpdate.activePosition
+      );
     } else if (trackItemPosition && activate && centerItemOnActivatePos) {
-      stateUpdate.itemPosition = {
-        x:
-          utils.convertRange(
-            0,
-            width,
-            0,
-            -(stateUpdate.itemDimensions.width || 0) + width,
-            stateUpdate.activePosition.x
-          ) +
-          (width / 2 - stateUpdate.activePosition.x),
-        y:
-          utils.convertRange(
-            0,
-            height,
-            0,
-            -(stateUpdate.itemDimensions.height || 0) + height,
-            stateUpdate.activePosition.y
-          ) +
-          (height / 2 - stateUpdate.activePosition.y)
-      };
-      shouldLimitItem = true;
+      stateUpdate.itemPosition = utils.centerItemOnPosition(
+        stateUpdate.elementDimensions,
+        stateUpdate.itemDimensions,
+        stateUpdate.activePosition
+      );
+    } else if (trackItemPosition && updateItemPosition) {
+      stateUpdate.itemPosition = utils.calculateItemPosition(
+        this.state.itemPosition,
+        stateUpdate.prevActivePosition,
+        stateUpdate.activePosition,
+        itemMovementMultiplier
+      );
+    } else {
+      shouldLimitItem = false;
     }
 
-    if (trackItemPosition && alignItemOnActivePos) {
-      stateUpdate.itemPosition = {
-        x: utils.convertRange(
-          0,
-          Math.ceil(width) - 1,
-          0,
-          -(stateUpdate.itemDimensions.width || 0) + width,
-          stateUpdate.activePosition.x
-        ),
-        y: utils.convertRange(
-          0,
-          Math.ceil(height) - 1,
-          0,
-          -(stateUpdate.itemDimensions.height || 0) + height,
-          stateUpdate.activePosition.y
-        )
-      };
-      shouldLimitItem = true;
-    }
-
-    if (shouldLimitItem || centerItem) {
-      stateUpdate.itemPosition = this.limitItemPosition(
-        stateUpdate.itemPosition,
-        (activate && centerItemOnActivate) || centerItem,
-        stateUpdate.elementDimensions.width,
-        stateUpdate.elementDimensions.height,
-        stateUpdate.itemDimensions && stateUpdate.itemDimensions.width,
-        stateUpdate.itemDimensions && stateUpdate.itemDimensions.height
+    // Apply position limits
+    if (shouldLimitItem) {
+      stateUpdate.itemPosition = utils.limitPosition(
+        limits.minX,
+        limits.maxX,
+        limits.minY,
+        limits.maxY,
+        stateUpdate.itemPosition
       );
     }
-
-    if (activate) stateUpdate.active = true;
 
     this.setState(() => stateUpdate, this.startRefreshTimer);
   }
@@ -313,87 +313,6 @@ class ReactInputPosition extends Component {
         y: position.y - top
       }
     }));
-  }
-
-  limitItemPosition(
-    itemPosition,
-    center,
-    elemWidth,
-    elemHeight,
-    itemWidth,
-    itemHeight
-  ) {
-    let {
-      itemPositionMinX,
-      itemPositionMaxX,
-      itemPositionMinY,
-      itemPositionMaxY,
-      itemPositionLimitBySize,
-      itemPositionLimitInternal
-    } = this.props;
-
-    if (itemPositionMaxX < 0) {
-      itemPositionMaxX = elemWidth + itemPositionMaxX;
-    }
-
-    if (itemPositionMaxY < 0) {
-      itemPositionMaxY = elemHeight + itemPositionMaxY;
-    }
-
-    if (itemPositionLimitBySize) {
-      let offsetX = this.state.elementDimensions.width;
-      let offsetY = this.state.elementDimensions.height;
-
-      if (itemPositionLimitInternal) {
-        itemPositionMinX = 0;
-        itemPositionMinY = 0;
-        itemPositionMaxX = offsetX - itemWidth;
-        itemPositionMaxY = offsetY - itemHeight;
-
-        if (itemWidth > offsetX || itemHeight > offsetY) {
-          itemPositionMaxX = 0;
-          itemPositionMaxY = 0;
-        }
-      } else if (itemWidth || itemHeight) {
-        itemPositionMaxX = 0;
-        itemPositionMaxY = 0;
-        itemPositionMinX = -itemWidth + offsetX;
-        itemPositionMinY = -itemHeight + offsetY;
-
-        if (itemWidth < offsetX || itemHeight < offsetY) {
-          itemPositionMinX = 0;
-          itemPositionMinY = 0;
-        }
-      }
-    }
-
-    const position = { ...itemPosition };
-
-    if (center) {
-      const centerX = (itemPositionMaxX + itemPositionMinX) / 2;
-      const centerY = (itemPositionMaxY + itemPositionMinY) / 2;
-      position.x = centerX || 0;
-      position.y = centerY || 0;
-    }
-
-    if (itemPositionMinX !== undefined && position.x < itemPositionMinX) {
-      position.x = itemPositionMinX;
-    } else if (
-      itemPositionMaxX !== undefined &&
-      position.x > itemPositionMaxX
-    ) {
-      position.x = itemPositionMaxX;
-    }
-    if (itemPositionMinY !== undefined && position.y < itemPositionMinY) {
-      position.y = itemPositionMinY;
-    } else if (
-      itemPositionMaxY !== undefined &&
-      position.y > itemPositionMaxY
-    ) {
-      position.y = itemPositionMaxY;
-    }
-
-    return position;
   }
 
   toggleActive(position = { x: 0, y: 0 }) {
