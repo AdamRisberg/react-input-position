@@ -1,4 +1,8 @@
 # Changelog
+## 1.1.3 (March 14th, 2019)
+- Fixed bug when using negative item position limits.
+- Added CHANGELOG.
+
 ## 1.1.2 (March 12th, 2019)
 - Refactored code to improve readability and performance.
 
