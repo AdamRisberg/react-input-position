@@ -58,11 +58,11 @@ function createAdjustedLimits(
   const limits = { minX, maxX, minY, maxY };
 
   if (limits.maxX < 0) {
-    limits.maxX = elemWidth + limits.maxX;
+    limits.maxX = elemDimensions.width + limits.maxX;
   }
 
   if (limits.maxY < 0) {
-    limits.maxY = elemHeight + limits.maxY;
+    limits.maxY = elemDimensions.height + limits.maxY;
   }
 
   if (!limitBySize) {
