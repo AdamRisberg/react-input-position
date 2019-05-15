@@ -21,9 +21,9 @@
   "author": "Adam Risberg <myniztan@hotmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/myniztan/react-input-position.git"
+    "url": "https://github.com/adamrisberg/react-input-position.git"
   },
-  "homepage": "https://myniztan.github.io/react-input-position",
+  "homepage": "https://adamrisberg.github.io/react-input-position",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",

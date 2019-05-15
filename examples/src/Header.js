@@ -8,7 +8,7 @@ const Header = () => {
           <h1>ReactInputPosition</h1>
         </div>
         <div className="logos">
-          <a href="https://github.com/myniztan/react-input-position">
+          <a href="https://github.com/adamrisberg/react-input-position">
             <img src={require("./github-logo.png")} alt="Github Logo" />
           </a>
           <a href="https://www.npmjs.com/package/react-input-position">

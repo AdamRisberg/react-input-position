@@ -1,4 +1,5 @@
 # react-input-position
+
 react-input-position is a component that decorates it's children with mouse/touch position tracking, a status toggle fired by click/gesture events, and more. Assisting in the creation of UI features that require detailed information about user touch/mouse input.
 
 The status toggle feature can be triggered by Click, Double Click, Hover, Mouse Down, Tap, Double Tap, Touch, and Long Touch gestures.
@@ -6,14 +7,17 @@ The status toggle feature can be triggered by Click, Double Click, Hover, Mouse 
 Includes an item tracking feature which provides coordinates that can be moved by user input. This position can be limited through min/max settings or even limited based on the size of a linked element anywhere in the hierarchy of children. Useful for creating some image components such as magnifiers.
 
 ## Demo
-Visit the [react-input-position demo site](https://myniztan.github.io/react-input-position).
+
+Visit the [react-input-position demo site](https://adamrisberg.github.io/react-input-position).
 
 ## Installation
+
 ```sh
 npm install --save react-input-position
 ```
 
 ## Basic Usage
+
 ```JSX
 import ReactInputPosition from "react-input-position";
 ...
@@ -25,6 +29,7 @@ import ReactInputPosition from "react-input-position";
 ```
 
 Importing and using activation method constants:
+
 ```JSX
 import ReactInputPosition, {
   MOUSE_ACTIVATION,
@@ -40,6 +45,7 @@ import ReactInputPosition, {
 ```
 
 Child components will receive the following props (although some may be inactive depending on the options you select):
+
 ```
 {
   active: boolean,
@@ -95,6 +101,7 @@ Child components will receive the following props (although some may be inactive
 **onLoadRefresh:** If slow loading elements are causing your initial stats to be inaccurate, you can call this function after they are loaded to reset and recalculate. For example, in an image's onload event.
 
 ## Props API
+
 All props are optional.
 
 **mouseActivationMethod:** Sets the mouse action necessary to toggle the component's active state. Accepted Values: "click", "doubleClick", "hover", "mouseDown". Type: string, Default: click.
@@ -119,11 +126,11 @@ All props are optional.
 
 **trackItemPosition:** Activates the item position functionality. Type: boolean, Default: false.
 
-**centerItemOnLoad:** Centers the item position on component mount. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
+**centerItemOnLoad:** Centers the item position on component mount. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false.
 
-**centerItemOnActivate:** Centers the item position whenever the component switches to an active state. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false. 
+**centerItemOnActivate:** Centers the item position whenever the component switches to an active state. Requires limits to be set for both min/max of both axis or limit by size. Type: boolean, Default: false.
 
-**centerItemOnActivatePos:** Centers the item based on the current mouse/touch position whenever the component switches to an active state. Achieved by scaling the input position based on the sizes of the component and item. Useful for image zoom style components where you want to display a larger version of an image, centered on the spot where the user clicked/tapped. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false. 
+**centerItemOnActivatePos:** Centers the item based on the current mouse/touch position whenever the component switches to an active state. Achieved by scaling the input position based on the sizes of the component and item. Useful for image zoom style components where you want to display a larger version of an image, centered on the spot where the user clicked/tapped. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false.
 
 **alignItemOnActivePos:** Links and aligns the item position with the active position. Achieved by scaling the active position based on the sizes of the component and item. Useful for creating components like a magnifying glass where a larger version of an image needs to stay aligned with a smaller version based on the current mouse/touch position. Requires use of the itemRef prop (see "Item Position Feature"). Type: boolean, Default: false.
 
@@ -152,6 +159,7 @@ All props are optional.
 **cursorStyleActive:** Sets the cursor style while the component is active. Accepts standard CSS cursor values. Type: string, Default: Uses cursorStyle if not set.
 
 ## Item Position Feature
+
 To use this feature, set the component's trackItemPosition prop to true. If you intend to use the itemPositionLimitBySize feature, pass the itemRef prop to the element you wish to enable the feature on. Example: `<img ref={props.itemRef} src="./example.jpg" />`.
 
 Set the item element's position to absolute and use the itemPosition prop to position the element. Set the item position limits to control how far the item can be moved.
@@ -161,13 +169,15 @@ The item element will now move based on the input of the user while the componen
 You can adjust the behavior of this feature further using the many API props provided.
 
 ## Style Notes
+
 Some styling passed to the component may be overwritten if they conflict with styles required for correct behavior.
 
 By default, the width of the component will adjust to the size of the child components. You can change this behavior by passing in your own styling using the className and/or style props.
 
 ## Example Project
+
 ```sh
-git clone https://github.com/myniztan/react-input-position.git
+git clone https://github.com/adamrisberg/react-input-position.git
 cd react-input-position
 npm install
 npm start
