@@ -27,6 +27,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage",
     "transpile": "rimraf dist && babel src -d dist",
     "prepublishOnly": "npm run transpile",
     "build": "rimraf examples/dist && webpack --mode production",
@@ -43,6 +45,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@types/jest": "^24.0.15",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
