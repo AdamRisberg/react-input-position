@@ -118,9 +118,9 @@ function calculateItemPosition(
 }
 
 function alignItemOnPosition(elemDimensions, itemDimensions, position) {
-  const oldMaxX = Math.ceil(elemDimensions.width) - 1;
+  const oldMaxX = elemDimensions.width;
   const newMaxX = -(itemDimensions.width || 0) + elemDimensions.width;
-  const oldMaxY = Math.ceil(elemDimensions.height) - 1;
+  const oldMaxY = elemDimensions.height;
   const newMaxY = -(itemDimensions.height || 0) + elemDimensions.height;
 
   return {
