@@ -1,5 +1,13 @@
 import utils from "../utils";
 
+describe("prevent default", () => {
+  it("calls preventDefault on event", () => {
+    const mockEvent = { preventDefault: jest.fn() };
+    utils.preventDefault(mockEvent);
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+  });
+});
+
 describe("convert range", () => {
   it("converts number to equivalent in new range", () => {
     expect(utils.convertRange(0, 10, 100, 200, 5)).toBe(150);
@@ -152,5 +160,29 @@ describe("calculate item position", () => {
         2
       )
     ).toEqual({ x: 40, y: 20 });
+  });
+});
+
+describe("align item on position", () => {
+  const elementDimensions = { width: 100, height: 100 };
+  const itemDimensions = { width: 300, height: 300 };
+  const position = { x: 20, y: 20 };
+
+  it("aligns item based on cursor position", () => {
+    expect(
+      utils.alignItemOnPosition(elementDimensions, itemDimensions, position)
+    ).toEqual({ x: -40, y: -40 });
+  });
+});
+
+describe("center item on position", () => {
+  const elementDimensions = { width: 100, height: 100 };
+  const itemDimensions = { width: 300, height: 300 };
+  const position = { x: 20, y: 20 };
+
+  it("centers specific spot on item within element based on cursor position", () => {
+    expect(
+      utils.centerItemOnPosition(elementDimensions, itemDimensions, position)
+    ).toEqual({ x: -10, y: -10 });
   });
 });
