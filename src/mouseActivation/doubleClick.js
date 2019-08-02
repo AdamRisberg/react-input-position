@@ -2,12 +2,10 @@ import utils from "../utils";
 
 function mouseDown() {
   this.mouseDown = true;
-  this.mouseJustDown = true;
 }
 
 function mouseUp() {
   this.mouseDown = false;
-  this.mouseJustDown = false;
 }
 
 function dblClick(e) {
@@ -23,13 +21,11 @@ function mouseMove(e) {
     return this.setPassivePosition(position);
   }
 
-  this.setPosition(position, this.mouseDown && !this.mouseJustDown);
-  this.mouseJustDown = false;
+  this.setPosition(position, this.mouseDown);
 }
 
 function mouseLeave() {
   this.mouseDown = false;
-  this.mouseJustDown = false;
 }
 
 export default {

@@ -21,7 +21,6 @@ class ReactInputPosition extends Component {
   containerRef = React.createRef();
   itemRef = React.createRef();
   mouseDown = false;
-  mouseJustDown = false;
   touched = false;
   justTouched = false;
   tapped = false;

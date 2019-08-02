@@ -2,7 +2,6 @@ import utils from "../utils";
 
 function mouseDown(e) {
   this.mouseDown = true;
-  this.mouseJustDown = false;
 
   this.clickMoveStartRef = e.clientX + e.clientY;
 }
@@ -11,7 +10,6 @@ function mouseUp(e) {
   if (!this.mouseDown) return;
 
   this.mouseDown = false;
-  this.mouseJustDown = false;
 
   const position = { x: e.clientX, y: e.clientY };
 
@@ -30,14 +28,11 @@ function mouseMove(e) {
     return this.setPassivePosition(position);
   }
 
-  this.setPosition(position, this.mouseDown && !this.mouseJustDown);
-
-  this.mouseJustDown = false;
+  this.setPosition(position, this.mouseDown);
 }
 
 function mouseLeave() {
   this.mouseDown = false;
-  this.mouseJustDown = false;
 }
 
 export default {

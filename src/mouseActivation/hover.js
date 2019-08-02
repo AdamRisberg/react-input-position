@@ -2,12 +2,10 @@ import utils from "../utils";
 
 function mouseDown() {
   this.mouseDown = true;
-  this.mouseJustDown = true;
 }
 
 function mouseUp() {
   this.mouseDown = false;
-  this.mouseJustDown = false;
 }
 
 function mouseMove(e) {
@@ -17,8 +15,7 @@ function mouseMove(e) {
     return this.activate(position);
   }
 
-  this.setPosition(position, this.mouseDown && !this.mouseJustDown);
-  this.mouseJustDown = false;
+  this.setPosition(position, this.mouseDown);
 }
 
 function mouseEnter(e) {
@@ -29,7 +26,6 @@ function mouseEnter(e) {
 function mouseLeave() {
   this.deactivate();
   this.mouseDown = false;
-  this.mouseJustDown = false;
 }
 
 export default {
