@@ -1,6 +1,5 @@
 function touchStart(e) {
   this.touched = true;
-  this.justTouched = true;
 
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
@@ -11,7 +10,6 @@ function touchEnd(e) {
   if (e.cancelable) e.preventDefault();
 
   this.touched = false;
-  this.justTouched = false;
 
   this.deactivate();
 }
@@ -22,8 +20,7 @@ function touchMove(e) {
 
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
-  this.setPosition(position, this.touched && !this.justTouched);
-  this.justTouched = false;
+  this.setPosition(position, this.touched);
 }
 
 function touchCancel() {

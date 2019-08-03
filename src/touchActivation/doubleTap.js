@@ -1,6 +1,5 @@
 function touchStart() {
   this.touched = true;
-  this.justTouched = true;
   this.startTapTimer();
 }
 
@@ -8,7 +7,6 @@ function touchEnd(e) {
   if (e.cancelable) e.preventDefault();
 
   this.touched = false;
-  this.justTouched = false;
 
   if (this.tapTimedOut) {
     this.tapTimedOut = false;
@@ -39,8 +37,7 @@ function touchMove(e) {
 
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
-  this.setPosition(position, this.touched && !this.justTouched);
-  this.justTouched = false;
+  this.setPosition(position, this.touched);
 }
 
 function touchCancel() {
