@@ -243,4 +243,10 @@ describe("mouse - mouse down activation event handlers", () => {
 
     expect(mockComponent.deactivate).toHaveBeenCalledTimes(1);
   });
+
+  it("does nothing on mouse leave when inactive", () => {
+    mouseLeave.call(mockComponent);
+
+    expect(mockComponent.deactivate).toHaveBeenCalledTimes(0);
+  });
 });

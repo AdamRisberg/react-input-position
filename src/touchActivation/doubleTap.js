@@ -33,7 +33,7 @@ function touchEnd(e) {
 
 function touchMove(e) {
   if (!this.state.active) return;
-  e.preventDefault();
+  if (e.cancelable) e.preventDefault();
 
   const touch = e.touches[0];
   const position = { x: touch.clientX, y: touch.clientY };
