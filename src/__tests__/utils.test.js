@@ -89,6 +89,12 @@ describe("create adjusted limits", () => {
     ).toEqual({ minX: -50, maxX: 0, minY: -50, maxY: 0 });
   });
 
+  it("limits by size using undefined itemDimensions", () => {
+    expect(
+      utils.createAdjustedLimits(0, 0, 0, 0, elemDimensions, {}, true, false)
+    ).toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
+  });
+
   it("limits by size - internal", () => {
     expect(
       utils.createAdjustedLimits(
@@ -172,6 +178,13 @@ describe("align item on position", () => {
     expect(
       utils.alignItemOnPosition(elementDimensions, itemDimensions, position)
     ).toEqual({ x: -40, y: -40 });
+  });
+
+  it("handles undefined item dimensions", () => {
+    expect(utils.alignItemOnPosition(elementDimensions, {}, position)).toEqual({
+      x: 20,
+      y: 20
+    });
   });
 });
 
