@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6 (August 8th, 2019)
+
+- Removed unused properties in mouse and touch event handlers
+- Removed unnecessary rounding in alignItemOnPosition
+- Added tests for index, utils, and event handlers
+- Added CircleCi
+- Added CircleCi and downloads badges to README
+
 ## 1.1.5 (May 16th, 2019)
 
 - Update README
