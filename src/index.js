@@ -111,10 +111,22 @@ class ReactInputPosition extends Component {
   }
 
   init() {
+    this.checkPassiveEventSupport();
     this.setInputInteractionMethods();
     this.addMouseEventListeners();
     this.addTouchEventListeners();
     this.addOtherEventListeners();
+  }
+
+  checkPassiveEventSupport() {
+    this.supportsPassive = false;
+    try {
+      const options = Object.defineProperty({}, "passive", {
+        get: () => (this.supportsPassive = true)
+      });
+      window.addEventListener("testPassive", null, options);
+      window.removeEventListener("testPassive", null, options);
+    } catch (e) {}
   }
 
   onLoadRefresh = () => {
@@ -366,7 +378,11 @@ class ReactInputPosition extends Component {
 
   addTouchEventListeners() {
     this.touchHandlers.forEach(touch => {
-      this.containerRef.current.addEventListener(touch.event, touch.handler);
+      this.containerRef.current.addEventListener(
+        touch.event,
+        touch.handler,
+        this.supportsPassive ? { passive: false } : false
+      );
     });
   }
 
@@ -378,7 +394,11 @@ class ReactInputPosition extends Component {
 
   removeTouchEventListeners() {
     this.touchHandlers.forEach(touch => {
-      this.containerRef.current.removeEventListener(touch.event, touch.handler);
+      this.containerRef.current.removeEventListener(
+        touch.event,
+        touch.handler,
+        this.supportsPassive ? { passive: false } : false
+      );
     });
   }
 
