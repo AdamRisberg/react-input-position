@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.7 (September 1st, 2019)
+
+- Fix non-passive touch event warnings
+
 ## 1.1.6 (August 8th, 2019)
 
 - Removed unused properties in mouse and touch event handlers
