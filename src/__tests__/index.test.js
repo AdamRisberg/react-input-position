@@ -471,3 +471,18 @@ describe("item tracking", () => {
     expect(childProps.itemPosition).toEqual({ x: 10, y: 10 });
   });
 });
+
+describe("onUpdate callback", () => {
+  const updateCallback = jest.fn();
+
+  const wrapper = mount(
+    <ReactInputPosition minUpdateSpeedInMs={0} onUpdate={updateCallback}>
+      <TestComponent />
+    </ReactInputPosition>
+  );
+
+  it("calls onUpdate callback with current state", () => {
+    expect(updateCallback).toHaveBeenCalledTimes(1);
+    expect(updateCallback).toHaveBeenCalledWith(wrapper.state());
+  });
+});
