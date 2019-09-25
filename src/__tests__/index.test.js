@@ -57,7 +57,6 @@ describe("decorates children", () => {
     elementOffset: { left: 0, top: 0 },
     itemPosition: { x: 0, y: 0 },
     itemDimensions: { width: 0, height: 0 },
-    refreshToggle: false,
     itemRef: expect.any(Object),
     onLoadRefresh: expect.any(Function)
   };

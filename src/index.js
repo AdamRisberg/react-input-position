@@ -14,8 +14,7 @@ class ReactInputPosition extends Component {
     elementDimensions: { width: 0, height: 0 },
     elementOffset: { left: 0, top: 0 },
     itemPosition: { x: 0, y: 0 },
-    itemDimensions: { width: 0, height: 0 },
-    refreshToggle: false
+    itemDimensions: { width: 0, height: 0 }
   };
 
   containerRef = React.createRef();
