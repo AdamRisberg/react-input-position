@@ -69,7 +69,8 @@ class ReactInputPosition extends Component {
     alignItemOnActivePos: PropTypes.bool,
     itemMovementMultiplier: PropTypes.number,
     cursorStyle: PropTypes.string,
-    cursorStyleActive: PropTypes.string
+    cursorStyleActive: PropTypes.string,
+    onUpdate: PropTypes.func
   };
 
   static defaultProps = {
@@ -127,6 +128,18 @@ class ReactInputPosition extends Component {
       window.addEventListener("testPassive", null, options);
       window.removeEventListener("testPassive", null, options);
     } catch (e) {}
+  }
+
+  updateState(changes, cb) {
+    const { onUpdate } = this.props;
+
+    this.setState(
+      () => changes,
+      () => {
+        cb && cb.call(this);
+        onUpdate && onUpdate(this.state);
+      }
+    );
   }
 
   onLoadRefresh = () => {
@@ -268,7 +281,7 @@ class ReactInputPosition extends Component {
         y: centerY || 0
       };
 
-      return this.setState(() => stateUpdate, this.startRefreshTimer);
+      return this.updateState(stateUpdate, this.startRefreshTimer);
     }
 
     let shouldLimitItem = true;
@@ -310,7 +323,7 @@ class ReactInputPosition extends Component {
       );
     }
 
-    this.setState(() => stateUpdate, this.startRefreshTimer);
+    this.updateState(stateUpdate, this.startRefreshTimer);
   }
 
   setPassivePosition(position) {
@@ -318,12 +331,12 @@ class ReactInputPosition extends Component {
 
     const { left, top } = this.containerRef.current.getBoundingClientRect();
 
-    this.setState(() => ({
+    this.updateState({
       passivePosition: {
         x: position.x - left,
         y: position.y - top
       }
-    }));
+    });
   }
 
   toggleActive(position = { x: 0, y: 0 }) {
@@ -339,7 +352,7 @@ class ReactInputPosition extends Component {
   }
 
   deactivate() {
-    this.setState(() => ({ active: false }));
+    this.updateState({ active: false });
   }
 
   startRefreshTimer() {
