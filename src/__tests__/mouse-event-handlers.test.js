@@ -11,6 +11,9 @@ beforeEach(() => {
     deactivate: jest.fn(),
     state: {
       active: false
+    },
+    getState: function() {
+      return this.state;
     }
   };
 });

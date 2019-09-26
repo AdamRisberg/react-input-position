@@ -22,6 +22,9 @@ beforeEach(() => {
     },
     props: {
       longTouchMoveLimit: 10
+    },
+    getState: function() {
+      return this.state;
     }
   };
 
