@@ -1,5 +1,6 @@
 function touchStart(e) {
   this.touched = true;
+  this.justTouched = true;
 
   clearTimeout(this.longTouchTimer);
 
@@ -13,6 +14,7 @@ function touchEnd(e) {
   if (e.cancelable) e.preventDefault();
 
   this.touched = false;
+  this.justTouched = false;
 }
 
 function touchMove(e) {
@@ -28,7 +30,8 @@ function touchMove(e) {
   if (!this.getState().active) return;
   if (e.cancelable) e.preventDefault();
 
-  this.setPosition(position, this.touched);
+  this.setPosition(position, this.touched && !this.justTouched);
+  this.justTouched = false;
 }
 
 function touchCancel() {
