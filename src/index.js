@@ -5,17 +5,19 @@ import touchActivation from "./touchActivation";
 import { MOUSE_ACTIVATION, TOUCH_ACTIVATION } from "./constants";
 import utils from "./utils";
 
+const defaultState = {
+  active: false,
+  activePosition: { x: 0, y: 0 },
+  prevActivePosition: { x: 0, y: 0 },
+  passivePosition: { x: 0, y: 0 },
+  elementDimensions: { width: 0, height: 0 },
+  elementOffset: { left: 0, top: 0 },
+  itemPosition: { x: 0, y: 0 },
+  itemDimensions: { width: 0, height: 0 }
+};
+
 class ReactInputPosition extends Component {
-  state = {
-    active: false,
-    activePosition: { x: 0, y: 0 },
-    prevActivePosition: { x: 0, y: 0 },
-    passivePosition: { x: 0, y: 0 },
-    elementDimensions: { width: 0, height: 0 },
-    elementOffset: { left: 0, top: 0 },
-    itemPosition: { x: 0, y: 0 },
-    itemDimensions: { width: 0, height: 0 }
-  };
+  state = defaultState;
 
   containerRef = React.createRef();
   itemRef = React.createRef();
@@ -69,7 +71,8 @@ class ReactInputPosition extends Component {
     itemMovementMultiplier: PropTypes.number,
     cursorStyle: PropTypes.string,
     cursorStyleActive: PropTypes.string,
-    onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
+    overrideState: PropTypes.object
   };
 
   static defaultProps = {
@@ -132,13 +135,42 @@ class ReactInputPosition extends Component {
   updateState(changes, cb) {
     const { onUpdate } = this.props;
 
+    if (this.props.overrideState) {
+      onUpdate && onUpdate(changes);
+      cb && cb.call(this);
+      return;
+    }
+
     this.setState(
       () => changes,
       () => {
         cb && cb.call(this);
-        onUpdate && onUpdate(this.state);
+        onUpdate && onUpdate(this.getStateClone());
       }
     );
+  }
+
+  getState() {
+    if (this.props.overrideState) {
+      return this.props.overrideState;
+    } else {
+      return this.state;
+    }
+  }
+
+  getStateClone() {
+    const state = this.getState();
+    const clonedState = {};
+
+    for (let key in state) {
+      if (typeof state[key] === "object") {
+        clonedState[key] = { ...state[key] };
+      } else {
+        clonedState[key] = state[key];
+      }
+    }
+
+    return clonedState;
   }
 
   onLoadRefresh = () => {
@@ -219,6 +251,8 @@ class ReactInputPosition extends Component {
       itemPositionLimitInternal
     } = this.props;
 
+    const { activePosition, itemPosition } = this.getState();
+
     // Set container div info and active position
     const stateUpdate = {
       elementDimensions: { width, height },
@@ -245,8 +279,8 @@ class ReactInputPosition extends Component {
     // Set previous active position
     if (trackPreviousPosition || trackItemPosition) {
       stateUpdate.prevActivePosition = {
-        x: this.state.activePosition.x,
-        y: this.state.activePosition.y
+        x: activePosition.x,
+        y: activePosition.y
       };
     }
 
@@ -302,7 +336,7 @@ class ReactInputPosition extends Component {
       );
     } else if (trackItemPosition && updateItemPosition) {
       stateUpdate.itemPosition = utils.calculateItemPosition(
-        this.state.itemPosition,
+        itemPosition,
         stateUpdate.prevActivePosition,
         stateUpdate.activePosition,
         itemMovementMultiplier
@@ -339,7 +373,7 @@ class ReactInputPosition extends Component {
   }
 
   toggleActive(position = { x: 0, y: 0 }) {
-    if (!this.state.active) {
+    if (!this.getState().active) {
       this.activate(position);
     } else {
       this.deactivate();
@@ -432,7 +466,7 @@ class ReactInputPosition extends Component {
       cursorStyle,
       cursorStyleActive
     } = this.props;
-    const { active } = this.state;
+    const { active } = this.getState();
 
     const combinedStyle = {
       ...style,
@@ -446,7 +480,7 @@ class ReactInputPosition extends Component {
     return (
       <div style={combinedStyle} className={className} ref={this.containerRef}>
         {utils.decorateChildren(children, {
-          ...this.state,
+          ...this.getState(),
           itemRef: this.itemRef,
           onLoadRefresh: this.onLoadRefresh
         })}
@@ -455,5 +489,5 @@ class ReactInputPosition extends Component {
   }
 }
 
-export { MOUSE_ACTIVATION, TOUCH_ACTIVATION };
+export { MOUSE_ACTIVATION, TOUCH_ACTIVATION, defaultState };
 export default ReactInputPosition;

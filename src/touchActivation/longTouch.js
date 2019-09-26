@@ -25,7 +25,7 @@ function touchMove(e) {
     clearTimeout(this.longTouchTimer);
   }
 
-  if (!this.state.active) return;
+  if (!this.getState().active) return;
   if (e.cancelable) e.preventDefault();
 
   this.setPosition(position, this.touched);

@@ -15,7 +15,7 @@ function touchEnd(e) {
 }
 
 function touchMove(e) {
-  if (!this.state.active) return;
+  if (!this.getState().active) return;
   if (e.cancelable) e.preventDefault();
 
   const touch = e.touches[0];

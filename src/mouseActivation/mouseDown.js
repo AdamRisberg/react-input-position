@@ -12,7 +12,7 @@ function mouseUp() {
 function mouseMove(e) {
   const position = { x: e.clientX, y: e.clientY };
 
-  if (!this.state.active) {
+  if (!this.getState().active) {
     return this.setPassivePosition(position);
   }
 
@@ -20,7 +20,7 @@ function mouseMove(e) {
 }
 
 function mouseLeave() {
-  if (this.state.active) {
+  if (this.getState().active) {
     this.deactivate();
   }
 }

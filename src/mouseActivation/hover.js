@@ -11,7 +11,7 @@ function mouseUp() {
 function mouseMove(e) {
   const position = { x: e.clientX, y: e.clientY };
 
-  if (!this.state.active) {
+  if (!this.getState().active) {
     return this.activate(position);
   }
 
