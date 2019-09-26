@@ -163,6 +163,46 @@ All props are optional.
 
 **cursorStyleActive:** Sets the cursor style while the component is active. Accepts standard CSS cursor values. Type: string, Default: Uses cursorStyle if not set.
 
+## Inversion of Control Props
+
+All children passed to the component expand the tracked interaction area (unless they have absolute positioning, for example). Because of this, sometimes, you may want to access the mouse/touch information in a sibling component. The following props can be used together in order to lift state to a parent component. All funcionality will remain the same. See the example below the prop descriptions.
+
+**onUpdate:** Used to pass a callback function which gets called on every state change with an object representing the new state. When used in combination with the overrideState prop, this callback will be called in place of internal setState with an object containing proposed state changes. Type: function
+
+**overrideState:** Used to pass a state object which will be used instead of internal state. Since this causes the component to surrendor control of state, it must be used in combination with the onUpdate callback. Type: object
+
+```JSX
+import ReactInputPosition, {
+  MOUSE_ACTIVATION,
+  TOUCH_ACTIVATION,
+  defaultState
+} from "react-input-position";
+
+class ParentComponent extends React.Component {
+  state = defaultState;
+
+  onUpdate = (stateChanges) => {
+    this.setState(stateChanges);
+  };
+
+  render() {
+    return (
+      <div>
+        <ReactInputPoisiton
+          mouseActivationMethod={MOUSE_ACTIVATION.DOUBLE_CLICK}
+          touchActivationMethod={TOUCH_ACTIVATION.DOUBLE_TAP}
+          overrideState={this.state}
+          onUpdate={this.onUpdate}
+        >
+          <DecoratedChild />
+        </ReactInputPosition>
+        <SiblingComponent {...this.state} >
+      </div>
+    );
+  }
+}
+```
+
 ## Item Position Feature
 
 To use this feature, set the component's trackItemPosition prop to true. If you intend to use the itemPositionLimitBySize feature, pass the itemRef prop to the element you wish to enable the feature on. Example: `<img ref={props.itemRef} src="./example.jpg" />`.

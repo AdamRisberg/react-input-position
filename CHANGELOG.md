@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0 (September 26th, 2019)
+
+- Added inversion of control props (onUpdate & overrideState)
+- Fix touchmove resetting position issue
+
 ## 1.1.7 (September 1st, 2019)
 
 - Fix non-passive touch event warnings
