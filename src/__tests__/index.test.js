@@ -1,7 +1,8 @@
 import React from "react";
 import ReactInputPosition, {
   MOUSE_ACTIVATION,
-  TOUCH_ACTIVATION
+  TOUCH_ACTIVATION,
+  defaultState
 } from "../index";
 
 import { mount, configure } from "enzyme";
@@ -475,14 +476,75 @@ describe("item tracking", () => {
 describe("onUpdate callback", () => {
   const updateCallback = jest.fn();
 
-  const wrapper = mount(
-    <ReactInputPosition minUpdateSpeedInMs={0} onUpdate={updateCallback}>
-      <TestComponent />
-    </ReactInputPosition>
-  );
-
   it("calls onUpdate callback with current state", () => {
+    const wrapper = mount(
+      <ReactInputPosition minUpdateSpeedInMs={0} onUpdate={updateCallback}>
+        <TestComponent />
+      </ReactInputPosition>
+    );
+
     expect(updateCallback).toHaveBeenCalledTimes(1);
     expect(updateCallback).toHaveBeenCalledWith(wrapper.state());
+
+    wrapper.unmount();
+    updateCallback.mockClear();
+  });
+
+  it("calls onUpdate callback with proposed state changes when state is overridden", () => {
+    const wrapper = mount(
+      <ReactInputPosition
+        minUpdateSpeedInMs={0}
+        onUpdate={updateCallback}
+        overrideState={defaultState}
+      >
+        <TestComponent />
+      </ReactInputPosition>
+    );
+
+    updateCallback.mockClear();
+
+    dispatchClickEvent(wrapper.getDOMNode());
+    wrapper.update();
+
+    expect(updateCallback).toHaveBeenCalledTimes(1);
+    expect(updateCallback).toHaveBeenCalledWith({
+      active: true,
+      activePosition: { x: 0, y: 0 },
+      elementDimensions: { height: 0, width: 0 },
+      elementOffset: { left: 0, top: 0 },
+      itemDimensions: { height: 0, width: 0 }
+    });
+
+    wrapper.unmount();
+    updateCallback.mockClear();
+  });
+});
+
+describe("overrideState", () => {
+  const testDefaultState = {
+    active: true,
+    activePosition: { x: 100, y: 200 },
+    prevActivePosition: { x: 0, y: 0 },
+    passivePosition: { x: 0, y: 0 },
+    elementDimensions: { width: 0, height: 0 },
+    elementOffset: { left: 0, top: 0 },
+    itemPosition: { x: 0, y: 0 },
+    itemDimensions: { width: 0, height: 0 }
+  };
+
+  it("uses overrideState instead of internal state", () => {
+    const wrapper = mount(
+      <ReactInputPosition
+        minUpdateSpeedInMs={0}
+        overrideState={testDefaultState}
+      >
+        <TestComponent />
+      </ReactInputPosition>
+    );
+
+    const childWrapper = wrapper.find(TestComponent);
+    expect(childWrapper.props()).toMatchObject(testDefaultState);
+
+    wrapper.unmount();
   });
 });
