@@ -237,7 +237,10 @@ describe("mouse - mouse down activation event handlers", () => {
     mouseMove.call(mockComponent, { clientX: 40, clientY: 50 });
 
     expect(mockComponent.setPosition).toHaveBeenCalledTimes(1);
-    expect(mockComponent.setPosition).toHaveBeenCalledWith({ x: 40, y: 50 });
+    expect(mockComponent.setPosition).toHaveBeenCalledWith(
+      { x: 40, y: 50 },
+      true
+    );
   });
 
   it("calls deactivate on mouse leave when active", () => {
