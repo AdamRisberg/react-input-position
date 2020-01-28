@@ -155,6 +155,8 @@ All props are optional.
 
 **itemPositionLimitInternal:** Changes the behavior of itemPositionLimitBySize to assume that the item is smaller than the component's size. Stops the item from moving outside the bounds of the component. For example, moving around a small image within a large viewing window. Type: boolean, Default: false.
 
+**mouseDownAllowOutside:** Allows component to stay active and continue tracking positions while mouse is outside of the tracked area. Only applies to the "mouseDown" activation method. Type: boolean, Default: false.
+
 **className:** Passed to the className of the component's parent div. Type: string, Default: "".
 
 **style:** Passed to the style of the component's parent div. Type: object, Default: {}.

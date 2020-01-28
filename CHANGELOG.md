@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 (January 28th, 2020)
+
+- Add mouseDownAllowOutside prop. Allows component to stay active and continue tracking positions while mouse is outside of the tracked area. Only applies to the "mouseDown" activation method.
+
 ## 1.2.1 (January 28th, 2020)
 
 - Fixed item position tracking while using mouse down activation method
