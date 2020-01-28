@@ -16,7 +16,7 @@ function mouseMove(e) {
     return this.setPassivePosition(position);
   }
 
-  this.setPosition(position);
+  this.setPosition(position, true);
 }
 
 function mouseLeave() {
