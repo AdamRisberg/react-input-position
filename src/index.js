@@ -72,7 +72,8 @@ class ReactInputPosition extends Component {
     cursorStyle: PropTypes.string,
     cursorStyleActive: PropTypes.string,
     onUpdate: PropTypes.func,
-    overrideState: PropTypes.object
+    overrideState: PropTypes.object,
+    mouseDownAllowOutside: PropTypes.bool
   };
 
   static defaultProps = {
@@ -86,7 +87,8 @@ class ReactInputPosition extends Component {
     itemMovementMultiplier: 1,
     cursorStyle: "crosshair",
     mouseActivationMethod: MOUSE_ACTIVATION.CLICK,
-    touchActivationMethod: TOUCH_ACTIVATION.TAP
+    touchActivationMethod: TOUCH_ACTIVATION.TAP,
+    mouseDownAllowOutside: false
   };
 
   componentDidMount() {
