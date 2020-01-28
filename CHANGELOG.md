@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 (January 28th, 2020)
+
+- Fixed item position tracking while using mouse down activation method
+
 ## 1.2.0 (September 26th, 2019)
 
 - Added inversion of control props (onUpdate & overrideState)
