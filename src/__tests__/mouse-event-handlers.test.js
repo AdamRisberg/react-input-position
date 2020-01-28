@@ -9,6 +9,9 @@ beforeEach(() => {
     setPassivePosition: jest.fn(),
     activate: jest.fn(),
     deactivate: jest.fn(),
+    props: {
+      mouseDownAllowOutside: false
+    },
     state: {
       active: false
     },
