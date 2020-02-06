@@ -73,7 +73,9 @@ class ReactInputPosition extends Component {
     cursorStyleActive: PropTypes.string,
     onUpdate: PropTypes.func,
     overrideState: PropTypes.object,
-    mouseDownAllowOutside: PropTypes.bool
+    mouseDownAllowOutside: PropTypes.bool,
+    onActivate: PropTypes.func,
+    onDeactivate: PropTypes.func
   };
 
   static defaultProps = {
@@ -137,8 +139,18 @@ class ReactInputPosition extends Component {
   updateState(changes, cb) {
     const { onUpdate } = this.props;
 
+    let activationCallback;
+    if (changes.hasOwnProperty("active")) {
+      if (changes.active) {
+        activationCallback = this.props.onActivate;
+      } else {
+        activationCallback = this.props.onDeactivate;
+      }
+    }
+
     if (this.props.overrideState) {
       onUpdate && onUpdate(changes);
+      activationCallback && activationCallback();
       cb && cb.call(this);
       return;
     }
@@ -147,6 +159,7 @@ class ReactInputPosition extends Component {
       () => changes,
       () => {
         cb && cb.call(this);
+        activationCallback && activationCallback();
         onUpdate && onUpdate(this.getStateClone());
       }
     );
