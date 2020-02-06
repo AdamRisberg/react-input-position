@@ -165,6 +165,10 @@ All props are optional.
 
 **cursorStyleActive:** Sets the cursor style while the component is active. Accepts standard CSS cursor values. Type: string, Default: Uses cursorStyle if not set.
 
+**onActivate:** Callback function to be executed when component becomes active. Type: function.
+
+**onDeactivate:** Callback function to be executed when component becomes inactive. Type: function.
+
 ## Inversion of Control Props
 
 All children passed to the component expand the tracked interaction area (unless they have absolute positioning, for example). Because of this, sometimes, you may want to access the mouse/touch information in a sibling component. The following props can be used together in order to lift state to a parent component. All funcionality will remain the same. See the example below the prop descriptions.

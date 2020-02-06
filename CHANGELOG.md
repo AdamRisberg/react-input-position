@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (February 6th, 2020)
+
+- Added onActivate and onDeactivate props. Allows passing callbacks to be executed when component becomes active or inactive, respectively.
+
 ## 1.3.0 (January 28th, 2020)
 
 - Add mouseDownAllowOutside prop. Allows component to stay active and continue tracking positions while mouse is outside of the tracked area. Only applies to the "mouseDown" activation method.
