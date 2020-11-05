@@ -27,7 +27,7 @@ function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
   return percent * (newMax - newMin) + newMin;
 }
 
-function limitPosition(minX, maxX, minY, maxY, itemPosition) {
+function limitPosition(minX, maxX, minY, maxY, itemPosition = {}) {
   const position = { ...itemPosition };
 
   if (minX !== undefined && position.x < minX) {
@@ -50,8 +50,8 @@ function createAdjustedLimits(
   maxX,
   minY,
   maxY,
-  elemDimensions,
-  itemDimensions,
+  elemDimensions = {},
+  itemDimensions = {},
   limitBySize,
   internal
 ) {
@@ -101,9 +101,9 @@ function createAdjustedLimits(
 }
 
 function calculateItemPosition(
-  itemPosition,
-  prevActivePosition,
-  activePosition,
+  itemPosition = {},
+  prevActivePosition = {},
+  activePosition = {},
   multiplier
 ) {
   const newItemPosition = { ...itemPosition };
@@ -117,7 +117,7 @@ function calculateItemPosition(
   return newItemPosition;
 }
 
-function alignItemOnPosition(elemDimensions, itemDimensions, position) {
+function alignItemOnPosition(elemDimensions = {}, itemDimensions = {}, position) {
   const oldMaxX = elemDimensions.width;
   const newMaxX = -(itemDimensions.width || 0) + elemDimensions.width;
   const oldMaxY = elemDimensions.height;
@@ -129,7 +129,7 @@ function alignItemOnPosition(elemDimensions, itemDimensions, position) {
   };
 }
 
-function centerItemOnPosition(elemDimensions, itemDimensions, position) {
+function centerItemOnPosition(elemDimensions = {}, itemDimensions = {}, position) {
   const itemPosition = alignItemOnPosition(
     elemDimensions,
     itemDimensions,
