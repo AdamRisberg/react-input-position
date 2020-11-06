@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 (November 6th, 2020)
+
+- Fix undefined itemDimensions error.
+
 ## 1.3.1 (February 6th, 2020)
 
 - Added onActivate and onDeactivate props. Allows passing callbacks to be executed when component becomes active or inactive, respectively.

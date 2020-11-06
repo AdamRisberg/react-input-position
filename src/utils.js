@@ -117,7 +117,11 @@ function calculateItemPosition(
   return newItemPosition;
 }
 
-function alignItemOnPosition(elemDimensions = {}, itemDimensions = {}, position) {
+function alignItemOnPosition(
+  elemDimensions = {},
+  itemDimensions = {},
+  position
+) {
   const oldMaxX = elemDimensions.width;
   const newMaxX = -(itemDimensions.width || 0) + elemDimensions.width;
   const oldMaxY = elemDimensions.height;
@@ -129,7 +133,11 @@ function alignItemOnPosition(elemDimensions = {}, itemDimensions = {}, position)
   };
 }
 
-function centerItemOnPosition(elemDimensions = {}, itemDimensions = {}, position) {
+function centerItemOnPosition(
+  elemDimensions = {},
+  itemDimensions = {},
+  position
+) {
   const itemPosition = alignItemOnPosition(
     elemDimensions,
     itemDimensions,
