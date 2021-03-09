@@ -55,11 +55,17 @@ function addRemoveOutsideHandlers(add) {
     });
 }
 
+function wheel(e) {
+  const position = { x: e.clientX, y: e.clientY };
+  this.setPosition(position);
+}
+
 export default {
   mouseDown,
   mouseUp,
   mouseMove,
   mouseLeave,
   mouseEnter,
+  wheel,
   dragStart: utils.preventDefault
 };

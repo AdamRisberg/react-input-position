@@ -28,11 +28,17 @@ function mouseLeave() {
   this.mouseDown = false;
 }
 
+function wheel(e) {
+  const position = { x: e.clientX, y: e.clientY };
+  this.setPosition(position);
+}
+
 export default {
   mouseDown,
   mouseUp,
   mouseMove,
   mouseEnter,
   mouseLeave,
+  wheel,
   dragStart: utils.preventDefault
 };
